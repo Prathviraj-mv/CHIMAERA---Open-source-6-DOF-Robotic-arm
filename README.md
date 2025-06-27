@@ -14,7 +14,7 @@ Elbow Joint: Controlled by an NEMA 17, providing stable controlled movement with
 
 Wrist Joint: MG996R servo, and NEMA 17 capable of up to 360° rotation or constrained movement for orientation control.
 
-Gripper: Servo-powered parallel for object holding.
+Gripper: MG996R Servo-powered for object holding.
 
 <p>
    <img src= "CAD/home_page-0001.jpg">
