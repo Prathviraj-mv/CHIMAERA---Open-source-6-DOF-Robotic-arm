@@ -1,8 +1,8 @@
 # CHIMAERA---Open-source-6-DOF-Robotic-arm
 
-Multi-joint articulated manipulator designed for precision movement and small-scale automation, experimentation, and learning advanced control.
+# Multi-joint articulated manipulator designed for precision movement and small-scale automation, experimentation, and learning advanced control.
 
-Degrees of Freedom (DOF): 6 DOF 
+# Degrees of Freedom (DOF): 6 DOF 
 
 Segments:
 
