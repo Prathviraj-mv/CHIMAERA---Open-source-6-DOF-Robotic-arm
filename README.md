@@ -2,10 +2,10 @@
 
 # Multi-joint articulated manipulator designed for precision movement and small-scale automation, experimentation, and learning advanced control.
 <p>
-  <img src= "CAD/IMG_20250628_210058.jpg" >
+  <img src= "CAD/IMG_20250628_210058.jpg" width =50% >
   <p>
 <p>
-   <img src= "CAD/IMG_20250628_210149.jpg">
+   <img src= "CAD/IMG_20250628_210149.jpg" width =50% >
 </p>
 
 # Degrees of Freedom (DOF): 6 DOF 
@@ -40,10 +40,10 @@ components:
                       
 
 <p>
-   <img src= "CAD/home_page-0001.jpg">
+   <img src= "CAD/home_page-0001.jpg" width =50% >
 </p>
 <p>
-  <img src= "CAD/ARM.png" >
+  <img src= "CAD/ARM.png"  width =50% >
 </p>
 
 
