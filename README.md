@@ -39,11 +39,4 @@ components:
 | **Power Supply**      | LiPo battery (3S)      |        
                       
 
-<p>
-   <img src= "CAD/home_page-0001.jpg" width =50% >
-</p>
-<p>
-  <img src= "CAD/ARM.png"  width =50% >
-</p>
-
 
