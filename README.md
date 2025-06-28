@@ -16,6 +16,23 @@ Wrist Joint: MG996R servo, and NEMA 17 capable of up to 360° rotation or constr
 
 Gripper: MG996R Servo-powered for object holding.
 
+components:
+| **Category**          | **Component**                                       |
+| --------------------- | --------------------------------------------------- | 
+| **Structure**         | PLA linkages                                        | 
+| **Actuators**         | **Base rotation:** NEMA 17 stepper                  | 
+|                       | **Shoulder joint:** NEMA 17 stepper                 |                            
+|                       | **Elbow joint:**NEMA 17 stepper                      |                       
+|                       | **Wrist pitch:** NEMA 17 stepper                       |                           
+|                       | **Gripper:**  MG995S                                 |                             
+|                       | **Wrist rotation:** NEMA 17 stepper                                                            
+| **Sensors**           | AS5600 magnetic encoder                             |                 
+| **Electronics**       | Arduino Mega                                |                           
+|                       | RAMPS + Stepper motor driver (A4988)       |                       
+|                       | Buck converter (12V → 7V/6V)                         |                        
+| **Power Supply**      | LiPo battery (3S)      |        
+                      
+
 <p>
    <img src= "CAD/home_page-0001.jpg">
 </p>
