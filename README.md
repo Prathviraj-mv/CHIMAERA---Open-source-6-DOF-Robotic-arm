@@ -3,7 +3,7 @@
 Multi-joint articulated manipulator designed for precision movement and small-scale automation, experimentation, and learning advanced control.
 <p>
   <img src= "IMAGES/IMG_20250628_210058.jpg" width =60% >
-  <p>
+</p>
 
 # Degrees of Freedom (DOF): 6 DOF 
 
