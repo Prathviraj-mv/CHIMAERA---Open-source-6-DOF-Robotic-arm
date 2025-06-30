@@ -30,7 +30,7 @@ Gripper: MG996R Servo-powered for object holding.
 | **Structure**         | PLA linkages                                        | 
 | **Actuators**         | **Base rotation:** NEMA 17 stepper                  | 
 |                       | **Shoulder joint:** NEMA 17 stepper                 |                            
-|                       | **Elbow joint:**NEMA 17 stepper                      |                       
+|                       | **Elbow joint:** NEMA 17 stepper                      |                       
 |                       | **Wrist pitch:** MG995S                       |                           
 |                       | **Gripper:**  MG995S                                 |                             
 |                       | **Wrist rotation:** NEMA 17 stepper                                                            
