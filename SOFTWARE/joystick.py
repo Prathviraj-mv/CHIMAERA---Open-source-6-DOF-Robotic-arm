@@ -14,27 +14,33 @@ joystick.init()
 
 # Configuration
 angle_step = 30
-
+angle =10
 # Angle limits
 limits = {
-    'x': (20, 160),   # Shoulder
+    'x': (20, 160),    # Shoulder
     'y': (-30, 110),   # Elbow
     'v': (-100, 200),  # Base
-    'z': (0, 180)      # Wrist
+    'z': (0, 180),     # Wrist
+    'a': (-10, 10),  # New stepper (adjust as needed)
+    'c': (0, 180)      # New servo
 }
 
 # Initialize angles
 angles = {
     'x': 0,   # Shoulder
-    'y': 0,   # Elbow
+    'y': 10,  # Elbow
     'v': 0,   # Base
-    'z': 90   # Wrist
+    'z': 90,  # Wrist
+    'a': 0,   # New stepper
+    'c': 90   # New servo
 }
 
-# Button B index (typically 1 for Xbox controllers, adjust if needed)
-BUTTON_B_INDEX = 1
+# Button mappings (adjust as needed)
+BUTTON_B_INDEX = 1  # Home
+BUTTON_X_INDEX = 2  # Send c45
+BUTTON_Y_INDEX = 3  # Send c-45
 
-print("Controller initialized. Use joysticks to control the robotic arm. Press 'B' to home.")
+print("Controller initialized. Use joysticks to control the robotic arm. Press 'B' to home, 'X'/'Y' to control gripper.")
 
 def send_angle(axis, angle):
     command = f"{axis}{angle}\n"
@@ -50,6 +56,8 @@ def send_home():
     angles['y'] = 10
     angles['v'] = 0
     angles['z'] = 90
+    angles['a'] = 0
+    angles['c'] = 90
 
 while True:
     pygame.event.pump()
@@ -84,11 +92,11 @@ while True:
 
     # Wrist ('z')
     if axis_z > 0.5:
-        angles['z'] = min(angles['z'] + angle_step, limits['z'][1])
+        angles['z'] = min(angles['z'] + angle, limits['z'][1])
         send_angle('z', angles['z'])
         time.sleep(0.2)
     elif axis_z < -0.5:
-        angles['z'] = max(angles['z'] - angle_step, limits['z'][0])
+        angles['z'] = max(angles['z'] - angle, limits['z'][0])
         send_angle('z', angles['z'])
         time.sleep(0.2)
 
@@ -102,7 +110,30 @@ while True:
         send_angle('v', angles['v'])
         time.sleep(0.2)
 
-    # Check if Button B is pressed to home
+    # Additional stepper ('a') controlled by D-pad (example: up/down)
+    hat = joystick.get_hat(0)  # (x, y)
+    if hat[1] == 1:  # D-pad up
+        angles['a'] = min(angles['a'] + angle_step, limits['a'][1])
+        send_angle('a', angles['a'])
+        time.sleep(0.2)
+    elif hat[1] == -1:  # D-pad down
+        angles['a'] = max(angles['a'] - angle_step, limits['a'][0])
+        send_angle('a', angles['a'])
+        time.sleep(0.2)
+
+    # Check Button B to home
     if joystick.get_button(BUTTON_B_INDEX):
         send_home()
-        time.sleep(0.5)  # Debounce delay
+        time.sleep(0.5)  # Debounce
+
+    # Check Button X to close gripper (send c45)
+    if joystick.get_button(BUTTON_X_INDEX):
+        angles['c'] = 45
+        send_angle('c', angles['c'])
+        time.sleep(0.5)  # Debounce
+
+    # Check Button Y to open gripper (send c-45)
+    if joystick.get_button(BUTTON_Y_INDEX):
+        angles['c'] = -45
+        send_angle('c', angles['c'])
+        time.sleep(0.5)  # Debounce
