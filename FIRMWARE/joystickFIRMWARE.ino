@@ -16,26 +16,36 @@
 #define Z_DIR_PIN     48
 #define Z_ENABLE_PIN  62
 
-#define SERVO1_PIN    11
+#define A_STEP_PIN    36   // New stepper
+#define A_DIR_PIN     34
+#define A_ENABLE_PIN  30
 
-#define MAX_SPEED     2000
-#define ACCELERATION  1000
+#define SERVO1_PIN    11
+#define SERVO2_PIN    5    // New servo
+
+#define MAX_SPEED     1600
+#define ACCELERATION  800
 
 // Create steppers
 AccelStepper stepperX(DRIVER, X_STEP_PIN, X_DIR_PIN); // Elbow
 AccelStepper stepperY(DRIVER, Y_STEP_PIN, Y_DIR_PIN); // Shoulder
 AccelStepper stepperZ(DRIVER, Z_STEP_PIN, Z_DIR_PIN); // Base
+AccelStepper stepperA(DRIVER, A_STEP_PIN, A_DIR_PIN); // New stepper
 
+// Create servos
 Servo servo1; // Wrist servo
+Servo servo2; // New servo
 
-// Conversion (adjust for your system)
-float degToSteps = 10.0; // calibrate based on your gearing
+// Conversion
+float degToSteps = 10.0; // Adjust as needed
 
 // Target angles
 float targetElbowDeg = 0;
 float targetShoulderDeg = 0;
 float targetBaseDeg = 0;
+float targetAStepperDeg = 0; // New stepper
 int targetWristDeg = 90;
+int targetServo2Deg = 90;    // New servo
 
 void setup() {
   Serial.begin(9600);
@@ -44,9 +54,12 @@ void setup() {
   pinMode(X_ENABLE_PIN, OUTPUT);
   pinMode(Y_ENABLE_PIN, OUTPUT);
   pinMode(Z_ENABLE_PIN, OUTPUT);
+  pinMode(A_ENABLE_PIN, OUTPUT);
+
   digitalWrite(X_ENABLE_PIN, LOW);
   digitalWrite(Y_ENABLE_PIN, LOW);
   digitalWrite(Z_ENABLE_PIN, LOW);
+  digitalWrite(A_ENABLE_PIN, LOW);
 
   // Stepper setup
   stepperX.setMaxSpeed(MAX_SPEED);
@@ -58,11 +71,17 @@ void setup() {
   stepperZ.setMaxSpeed(MAX_SPEED);
   stepperZ.setAcceleration(ACCELERATION);
 
+  stepperA.setMaxSpeed(MAX_SPEED);
+  stepperA.setAcceleration(ACCELERATION);
+
   // Servo setup
   servo1.attach(SERVO1_PIN);
-  servo1.write(targetWristDeg);
+  servo2.attach(SERVO2_PIN);
 
-  Serial.println("Ready: Send x<angle>(shoulder), y<angle>(elbow), v<angle>(base), z<angle>(wrist), h(home).");
+  servo1.write(targetWristDeg);
+  servo2.write(targetServo2Deg);
+
+  Serial.println("Ready: Send x(shoulder), y(elbow), v(base), a(stepper4), z(wrist), c(servo2), h(home).");
 }
 
 void loop() {
@@ -72,18 +91,23 @@ void loop() {
     cmd.toLowerCase();
 
     if (cmd.length() == 1 && cmd.charAt(0) == 'h') {
-      // Home all axes
+      // Home all
       targetElbowDeg = 0;
       targetShoulderDeg = 0;
       targetBaseDeg = 0;
+      targetAStepperDeg = 0;
       targetWristDeg = 90;
+      targetServo2Deg = 90;
 
       stepperX.moveTo(targetElbowDeg * degToSteps);
-      stepperY.moveTo((-targetShoulderDeg) * degToSteps); // Inverted Y-axis
+      stepperY.moveTo((-targetShoulderDeg) * degToSteps);
       stepperZ.moveTo(targetBaseDeg * degToSteps);
-      servo1.write(targetWristDeg);
+      stepperA.moveTo(targetAStepperDeg * degToSteps);
 
-      Serial.println("Homing all axes to 0° and wrist to 90°");
+      servo1.write(targetWristDeg);
+      servo2.write(targetServo2Deg);
+
+      Serial.println("Homing all axes and servos.");
     }
 
     else if (cmd.length() > 1) {
@@ -103,26 +127,40 @@ void loop() {
           Serial.print("Base target angle: "); Serial.println(targetBaseDeg);
           break;
 
-        case 'x': // Shoulder 
+        case 'x': // Shoulder
           targetShoulderDeg = angle;
-          stepperY.moveTo((targetShoulderDeg) * degToSteps); 
-          Serial.print("Shoulder target angle (inverted): "); Serial.println(targetShoulderDeg);
+          stepperY.moveTo(targetShoulderDeg * degToSteps);
+          Serial.print("Shoulder target angle: "); Serial.println(targetShoulderDeg);
           break;
 
-        case 'z': // Wrist
+        case 'a': // New stepper
+          targetAStepperDeg = angle;
+          stepperA.moveTo(targetAStepperDeg * degToSteps);
+          Serial.print("Stepper A target angle: "); Serial.println(targetAStepperDeg);
+          break;
+
+        case 'z': // Wrist servo
           targetWristDeg = constrain(angle, 0, 180);
           servo1.write(targetWristDeg);
           Serial.print("Wrist servo angle: "); Serial.println(targetWristDeg);
           break;
 
+        case 'c': // New servo
+          targetServo2Deg = constrain(angle, 0, 180);
+          servo2.write(targetServo2Deg);
+          Serial.print("Servo2 angle: "); Serial.println(targetServo2Deg);
+          break;
+
         default:
-          Serial.println("Unknown command. Use x, y, v, z with angle or h to home.");
+          Serial.println("Unknown command. Use x, y, v, a, z, c, or h.");
           break;
       }
     }
   }
 
+  // Non-blocking stepper updates
   stepperX.run();
   stepperY.run();
   stepperZ.run();
+  stepperA.run();
 }
