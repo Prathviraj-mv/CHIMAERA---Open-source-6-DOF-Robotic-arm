@@ -20,7 +20,7 @@ Wrist Joint: MG996R servo, and NEMA 17 capable of up to 360° rotation or constr
 Gripper: MG996R Servo-powered for object holding.
 
 <p>
-  <img src ="IMAGES/RENDER.PNG" width =60%>
+  <img src ="IMAGES/RENDER1.PNG" width =60%>
 </p>
 
 
