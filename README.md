@@ -24,7 +24,7 @@ Gripper: MG996R Servo-powered for object holding.
 </p>
 
 
-# components:
+# Components:
 | **Category**          | **Component**                                       |
 | --------------------- | --------------------------------------------------- | 
 | **Structure**         | PLA linkages                                        | 
