@@ -4,9 +4,7 @@ Multi-joint articulated manipulator designed for precision movement and small-sc
 <p>
   <img src= "IMAGES/IMG_20250628_210058.jpg" width =60% >
 </p>
-<p>
-  <img src= "render.jpg" width =60% >
-</p>
+
 # Degrees of Freedom (DOF): 6 DOF 
 
 Segments:
@@ -22,7 +20,7 @@ Wrist Joint: MG996R servo, and NEMA 17 capable of up to 360° rotation or constr
 Gripper: MG996R Servo-powered for object holding.
 
 <p>
-  <img src ="IMAGES/wrist_2025-Jun-29_02-11-46PM-000_CustomizedView11417113252.jpg" width =60%>
+  <img src ="IMAGES/RENDER.png" width =60%>
 </p>
 
 
