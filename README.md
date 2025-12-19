@@ -5,7 +5,7 @@ Multi-joint articulated manipulator designed for precision movement and small-sc
   <img src= "IMAGES/IMG_20250628_210058.jpg" width =60% >
 </p>
 
-# Degrees of Freedom (DOF): 6 DOF 
+# Degrees of Freedom (DOF): 5 DOF 
 
 Segments:
 
