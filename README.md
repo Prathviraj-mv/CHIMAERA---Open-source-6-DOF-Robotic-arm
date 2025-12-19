@@ -1,4 +1,4 @@
-# CHIMAERA---Open-source-6-DOF-Robotic-arm
+# CHIMAERA---Open-source-5-DOF-Robotic-arm
 
 Multi-joint articulated manipulator designed for precision movement and small-scale automation, experimentation, and learning advanced control.
 <p>
